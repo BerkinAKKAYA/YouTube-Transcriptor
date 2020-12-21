@@ -10,9 +10,20 @@
 	<script src="script.js" defer></script>
 </head>
 <body>
+	<header>
+		<h1>YouTube Transcriptor</h1>
+		<p>by Berkin AKKAYA</p>
+	</header>
+
 	<div id="form">
 		<input type="text" placeholder="Video ID or URL" id="videoIdInput" />
-		<input type="submit" onclick="showTranscription()" />
+		<input type="submit" onclick="showLanguageList()" />
+	</div>
+
+	<div id="langSelect">
+		<span>Select Language:</span>
+		<select onchange="showTranscription()">
+		</select>
 	</div>
 
 	<!-- Result -->

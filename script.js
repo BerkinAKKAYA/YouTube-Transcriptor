@@ -3,8 +3,14 @@ const parentElement = document.querySelector("#transcript");
 
 function showTranscription() {
 	const videoId = ReadVideoIdFromInput();
-	const transcriptionLink = `https://video.google.com/timedtext?lang=en&v=${videoId}`;
+	const language = document.querySelector("#langSelect select").value;
+
+	const transcriptionLink = `https://video.google.com/timedtext?lang=${language}&v=${videoId}`;
 	parentElement.innerHTML = "";
+
+	if (language == "None") {
+		return;
+	}
 
 	fetch(transcriptionLink)
 		.then(response => response.text())
@@ -12,6 +18,38 @@ function showTranscription() {
 		.then(data => {
 			const transcript = data.querySelector("transcript");
 			PrintTranscript(transcript);
+		});
+}
+
+function showLanguageList() {
+	const videoId = ReadVideoIdFromInput();
+	const targetURL = `http://video.google.com/timedtext?type=list&v=${videoId}`;
+
+	fetch(targetURL)
+		.then(response => response.text())
+		.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+		.then(data => {
+			const transcriptList = data.querySelector("transcript_list");
+			const tracks = Array.from(transcriptList.querySelectorAll("track"));
+
+			if (tracks.length == 0) {
+				parentElement.innerHTML = "No Transcript Found!";
+			}
+
+			const lang_codes = tracks.map(track => track.attributes.lang_code.value);
+
+			const selectElement = document.querySelector("#langSelect select");
+			selectElement.parentElement.style.display = "flex";
+
+			const noneOption = document.createElement("option");
+			noneOption.innerHTML = "None";
+			selectElement.appendChild(noneOption);
+			
+			for (const code of lang_codes) {
+				const option = document.createElement("option");
+				option.innerHTML = code;
+				selectElement.appendChild(option);
+			}
 		});
 }
 
@@ -38,6 +76,7 @@ function ReadVideoIdFromInput() {
 	}
 }
 
+// Takes XML <transcript> tag and prints it.
 function PrintTranscript(transcript) {
 	const texts = transcript.querySelectorAll("text");
 
