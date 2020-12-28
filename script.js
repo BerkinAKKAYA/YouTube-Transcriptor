@@ -23,7 +23,7 @@ function showTranscription() {
 
 function showLanguageList() {
 	const videoId = ReadVideoIdFromInput();
-	const targetURL = `http://video.google.com/timedtext?type=list&v=${videoId}`;
+	const targetURL = `https://video.google.com/timedtext?type=list&v=${videoId}`;
 
 	fetch(targetURL)
 		.then(response => response.text())
@@ -44,7 +44,7 @@ function showLanguageList() {
 			const noneOption = document.createElement("option");
 			noneOption.innerHTML = "None";
 			selectElement.appendChild(noneOption);
-			
+
 			for (const code of lang_codes) {
 				const option = document.createElement("option");
 				option.innerHTML = code;
@@ -58,9 +58,9 @@ function FormatSeconds(secondsToFormat) {
 	let hours = parseInt(secondsToFormat / 3600);
 	let minutes = parseInt(secondsToFormat / 60);
 	let seconds = parseInt(secondsToFormat % 60);
-	if (hours   <= 9) { hours   = "0" + hours   }
-	if (minutes <= 9) { minutes = "0" + minutes }
-	if (seconds <= 9) { seconds = "0" + seconds }
+	if (hours <= 9) {hours = "0" + hours}
+	if (minutes <= 9) {minutes = "0" + minutes}
+	if (seconds <= 9) {seconds = "0" + seconds}
 	return `${hours}:${minutes}:${seconds}`;
 }
 
@@ -80,7 +80,7 @@ function ReadVideoIdFromInput() {
 function PrintTranscript(transcript) {
 	const texts = transcript.querySelectorAll("text");
 
-	for (let i=0; i<texts.length; i++) {
+	for (let i = 0; i < texts.length; i++) {
 		// Create Elements To Print
 		const container = document.createElement("p");
 		const startTimeElement = document.createElement("span");
