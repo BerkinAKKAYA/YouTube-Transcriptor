@@ -16,6 +16,14 @@ header p {
 	opacity: .4;
 	margin-top: 5px;
 }
+#description {
+	text-align: center;
+	width: 90vw;
+	margin-left: 5vw;
+	margin-top: 50px;
+	color: #666;
+	cursor: default;
+}
 #form, #langSelect {
 	width: 100%;
 	margin: 50px 0;

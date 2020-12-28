@@ -33,7 +33,7 @@ function showLanguageList() {
 			const tracks = Array.from(transcriptList.querySelectorAll("track"));
 
 			if (tracks.length == 0) {
-				parentElement.innerHTML = "No Transcript Found!";
+				parentElement.innerHTML = "No Captions Found In This Video...";
 			}
 
 			const lang_codes = tracks.map(track => track.attributes.lang_code.value);
